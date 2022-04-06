@@ -1,0 +1,111 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>de.sample.messaging.javax</groupId>
+    <artifactId>customer-producer-jakarta-ee-sample</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
+    <name>Customer Producer Application (Plain Jakarta EE)</name>
+
+    <properties>
+        <!-- Standard-Properties durch Maven Plugins -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <!-- Java EE version -->
+        <version.jakartaee-spec>9.1.0</version.jakartaee-spec>
+        <version.liberty>22.0.0.3</version.liberty>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.openliberty</groupId>
+                <artifactId>openliberty-runtime</artifactId>
+                <version>${version.liberty}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>${version.jakartaee-spec}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <!-- Dateiname ohne Version siehe server.xml -->
+        <finalName>customer-producer</finalName>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>3.3.2</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>local</id>
+            <build>
+                <plugins>
+                    <!-- Liberty Profile Konfiguration -->
+                    <plugin>
+                        <groupId>io.openliberty.tools</groupId>
+                        <artifactId>liberty-maven-plugin</artifactId>
+                        <version>3.5.1</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <configFile>src/main/liberty/config/server.xml</configFile>
+                            <assemblyArtifact>
+                                <groupId>io.openliberty</groupId>
+                                <artifactId>openliberty-runtime</artifactId>
+                                <version>${version.liberty}</version>
+                                <type>zip</type>
+                            </assemblyArtifact>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>install-liberty</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>install-server</goal>
+                                    <goal>install-feature</goal>
+                                </goals>
+                                <configuration>
+                                    <features>
+                                        <acceptLicense>true</acceptLicense>
+                                    </features>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>package-app</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>package</goal>
+                                    <goal>deploy</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>target/wlp-package</outputDirectory>
+                                    <looseApplication>true</looseApplication>
+                                    <stripVersion>true</stripVersion>
+                                    <installAppPackages>project</installAppPackages>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>
