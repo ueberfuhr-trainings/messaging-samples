@@ -21,6 +21,7 @@
         <version.javaee-spec>8.0.1</version.javaee-spec>
         <version.liberty>22.0.0.3</version.liberty>
         <config.liberty>src/main/liberty/config/server.xml</config.liberty>
+        <version.liberty-plugin>3.5.1</version.liberty-plugin>
     </properties>
 
     <dependencyManagement>
@@ -54,6 +55,25 @@
     <build>
         <!-- Dateiname ohne Version siehe server.xml -->
         <finalName>customer-producer</finalName>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>io.openliberty.tools</groupId>
+                    <artifactId>liberty-maven-plugin</artifactId>
+                    <version>${version.liberty-plugin}</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <configFile>${config.liberty}</configFile>
+                        <assemblyArtifact>
+                            <groupId>io.openliberty</groupId>
+                            <artifactId>openliberty-runtime</artifactId>
+                            <version>${version.liberty}</version>
+                            <type>zip</type>
+                        </assemblyArtifact>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
     <profiles>
@@ -65,17 +85,6 @@
                     <plugin>
                         <groupId>io.openliberty.tools</groupId>
                         <artifactId>liberty-maven-plugin</artifactId>
-                        <version>3.5.1</version>
-                        <extensions>true</extensions>
-                        <configuration>
-                            <configFile>${config.liberty}</configFile>
-                            <assemblyArtifact>
-                                <groupId>io.openliberty</groupId>
-                                <artifactId>openliberty-runtime</artifactId>
-                                <version>${version.liberty}</version>
-                                <type>zip</type>
-                            </assemblyArtifact>
-                        </configuration>
                         <executions>
                             <execution>
                                 <id>install-liberty</id>
