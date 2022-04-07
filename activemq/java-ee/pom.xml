@@ -14,6 +14,7 @@
 
     <modules>
         <module>customer-producer-java-ee-sample</module>
+        <module>customer-consumer-java-ee-sample</module>
     </modules>
 
     <properties>

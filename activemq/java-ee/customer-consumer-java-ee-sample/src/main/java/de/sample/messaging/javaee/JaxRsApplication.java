@@ -9,7 +9,7 @@ import javax.ws.rs.core.Application;
 @OpenAPIDefinition(
   info = @Info(
     version = "1",
-    title = "Customer Producer API"
+    title = "Customer Consumer API"
   )
 )
 @ApplicationPath("api/v1")

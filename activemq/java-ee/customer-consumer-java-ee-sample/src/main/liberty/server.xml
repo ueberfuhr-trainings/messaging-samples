@@ -2,6 +2,7 @@
     <featureManager>
         <feature>localConnector-1.0</feature>
         <feature>jaxrs-2.1</feature>
+        <feature>mdb-3.2</feature>
         <feature>jms-2.0</feature>
         <feature>jndi-1.0</feature>
         <feature>openapi-3.1</feature>
@@ -10,10 +11,10 @@
     </featureManager>
 
     <httpEndpoint httpPort="${SERVER_HTTP_PORT}" httpsPort="${SERVER_HTTPS_PORT}" host="${SERVER_VHOST}"/>
-    <webApplication id="customer-producer" contextRoot="/customer-producer" location="customer-producer.war"/>
+    <webApplication id="customer-consumer" contextRoot="/customer-consumer" location="customer-consumer.war"/>
 
     <!-- Active MQ -->
-    <resourceAdapter id="activemq" location="${shared.resource.dir}/activemq-rar-${AMQ_VERSION}.rar" >
+    <resourceAdapter id="activemq" location="${shared.resource.dir}/activemq-rar-${AMQ_VERSION}.rar">
         <properties.activemq serverUrl="tcp://${AMQ_HOST}:${AMQ_PORT}" userName="${AMQ_USER}" password="${AMQ_PASSWORD}"/>
     </resourceAdapter>
 
@@ -24,5 +25,10 @@
     <jmsQueue id="customer-javaee-queue" jndiName="jms/CustomerQueue">
         <properties.activemq PhysicalName="customer-javaee-queue"/>
     </jmsQueue>
+
+    <!-- Message Driven Bean -->
+    <jmsActivationSpec id="customer-consumer/CustomerMDB">
+        <properties.activemq destinationRef="customer-javaee-queue" destinationType="javax.jms.Queue"/>
+    </jmsActivationSpec>
 
 </server>
