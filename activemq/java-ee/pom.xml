@@ -19,9 +19,10 @@
     <properties>
         <!-- Java EE version -->
         <version.javaee-spec>8.0.1</version.javaee-spec>
-        <version.liberty>22.0.0.3</version.liberty>
-        <config.liberty>src/main/liberty/config/server.xml</config.liberty>
+        <version.liberty>22.0.0.2</version.liberty>
+        <config.liberty>src/main/liberty</config.liberty>
         <version.liberty-plugin>3.5.1</version.liberty-plugin>
+        <version.amq-rar>5.17.0</version.amq-rar>
     </properties>
 
     <dependencyManagement>
@@ -50,6 +51,19 @@
             <version>1.2</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.eclipse.microprofile.openapi</groupId>
+            <artifactId>microprofile-openapi-api</artifactId>
+            <version>3.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-rar</artifactId>
+            <version>${version.amq-rar}</version>
+            <type>rar</type>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -58,12 +72,17 @@
         <pluginManagement>
             <plugins>
                 <plugin>
+                    <!-- Usage:
+                     - mvn liberty:install-server (download server into target folder)
+                     - mvn liberty:dev (start server)
+                     - mvn liberty:stop (stop server)
+                     -->
                     <groupId>io.openliberty.tools</groupId>
                     <artifactId>liberty-maven-plugin</artifactId>
                     <version>${version.liberty-plugin}</version>
                     <extensions>true</extensions>
                     <configuration>
-                        <configFile>${config.liberty}</configFile>
+                        <configDirectory>${config.liberty}</configDirectory>
                         <assemblyArtifact>
                             <groupId>io.openliberty</groupId>
                             <artifactId>openliberty-runtime</artifactId>
@@ -91,26 +110,25 @@
                                 <phase>prepare-package</phase>
                                 <goals>
                                     <goal>install-server</goal>
-                                    <goal>install-feature</goal>
                                 </goals>
-                                <configuration>
-                                    <features>
-                                        <acceptLicense>true</acceptLicense>
-                                    </features>
-                                </configuration>
                             </execution>
+                        </executions>
+                    </plugin>
+                    <!-- - - - - - - copy AMQ resource adapter to shared resources - - - -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <version>3.2.0</version>
+                        <executions>
                             <execution>
-                                <id>package-app</id>
+                                <id>copy-amq-rar</id>
                                 <phase>package</phase>
                                 <goals>
-                                    <goal>package</goal>
-                                    <goal>deploy</goal>
+                                    <goal>copy-dependencies</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>target/wlp-package</outputDirectory>
-                                    <looseApplication>true</looseApplication>
-                                    <stripVersion>true</stripVersion>
-                                    <installAppPackages>project</installAppPackages>
+                                    <includeArtifactIds>activemq-rar</includeArtifactIds>
+                                    <outputDirectory>${project.build.directory}/liberty/wlp/usr/shared/resources/</outputDirectory>
                                 </configuration>
                             </execution>
                         </executions>
