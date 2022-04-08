@@ -5,6 +5,7 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
 import javax.jms.MapMessage;
@@ -21,8 +22,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.time.format.DateTimeFormatter;
-import java.util.Map;
-import java.util.TreeMap;
 import java.util.function.Function;
 
 @ApplicationScoped // https://github.com/OpenLiberty/open-liberty/issues/6120
@@ -36,43 +35,38 @@ public class CustomersResource {
     @Resource(lookup = "jms/CustomerQueue")
     Queue customerQueue;
 
-    // just in-memory
-    private final Map<Long, CustomerDto> customers = new TreeMap<>();
-    private long counter; // not thread-safe
+    @Inject
+    CustomerManager manager;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getCustomers() {
-        return Response.ok(this.customers.values()).build();
+        return Response.ok(this.manager.getCustomers()).build();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
     public Response getCustomer(@PathParam("id") long id) {
-        var result = this.customers.get(id);
-        if(result != null) {
-            return Response.ok(result).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
+        return this.manager.findById(id)
+          .map(Response::ok)
+          .orElse(Response.status(Response.Status.NOT_FOUND))
+          .build();
     }
-
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @SneakyThrows
-    public Response sendCustomer(CustomerDto customer, @Context UriInfo info) {
+    public Response sendCustomer(Customer customer, @Context UriInfo info) {
+        this.manager.addCustomer(customer);
         pushToQueue(customer);
-        customer.setId(this.counter++);
-        this.customers.put(customer.getId(), customer);
         var location = info.getAbsolutePathBuilder()
           .path(Long.toString(customer.getId()))
           .build();
         return Response.created(location).build();
     }
 
-    private void pushToQueue(CustomerDto customer) throws JMSException {
+    private void pushToQueue(Customer customer) throws JMSException {
         try (var con = jmsConnectionFactory.createConnection();
           var session = con.createSession(false, Session.AUTO_ACKNOWLEDGE)) {
             // different types of messages
