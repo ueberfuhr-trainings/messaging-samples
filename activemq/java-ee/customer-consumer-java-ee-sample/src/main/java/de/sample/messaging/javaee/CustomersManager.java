@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.TreeMap;
 
 @ApplicationScoped
-public class CustomerManager {
+public class CustomersManager {
 
     // just in-memory
     private final Map<Long, Customer> customers = new TreeMap<>();
@@ -27,6 +27,5 @@ public class CustomerManager {
         }
         this.customers.put(customer.getId(), customer);
     }
-
 
 }

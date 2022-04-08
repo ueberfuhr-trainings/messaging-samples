@@ -1,0 +1,11 @@
+server:
+  port: 8081
+spring:
+  kafka:
+    bootstrap-servers: localhost:29092
+    consumer:
+      auto-offset-reset: earliest
+      group-id: customers
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        ['spring.json.trusted.packages']: de.sample.kafka.customers

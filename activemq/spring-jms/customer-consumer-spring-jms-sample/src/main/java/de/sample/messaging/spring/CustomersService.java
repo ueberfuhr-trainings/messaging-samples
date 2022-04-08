@@ -1,13 +1,14 @@
-package de.sample.messaging.javaee;
+package de.sample.messaging.spring;
 
-import javax.enterprise.context.ApplicationScoped;
+import org.springframework.stereotype.Service;
+
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
 
-@ApplicationScoped
-public class CustomerManager {
+@Service
+public class CustomersService {
 
     // just in-memory
     private final Map<Long, Customer> customers = new TreeMap<>();
@@ -27,5 +28,6 @@ public class CustomerManager {
         }
         this.customers.put(customer.getId(), customer);
     }
+
 
 }

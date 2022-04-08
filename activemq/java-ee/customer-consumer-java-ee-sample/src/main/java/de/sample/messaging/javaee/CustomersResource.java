@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 public class CustomersResource {
 
     @Inject
-    CustomerManager manager;
+    CustomersManager manager;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

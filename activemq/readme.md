@@ -1,42 +1,19 @@
-# Spring Boot Kafka Sample
+# Active MQ Samples
 
-This sample contains 2 Spring Boot projects:
+This samples use Active MQ to communicate. There are implementations for
 
-- a webapp to produce a customer
-- a consumer that stores customers (in-memory) and provides a REST service to read them out
+- [Java EE with Liberty and JMS](java-ee)
+- [Jakarta EE with Liberty and JMS](jakarta-ee)
+- [Spring Boot and JMS](spring-jms)
+- [Spring Boot and STOMP](spring-stomp)
 
-## Install Kafka
+## Install Active MQ
 
-We can use Docker to install a Kafka service. Kafka needs ZooKeeper, so both are installed as a service by
+We can use Docker to install Active MQ.
 
 ```bash
 docker-compose up -d
 ```
 
-Kafka is then reachable on the host system with local port `29092` (`http://localhost:29092`). You can connect to it using [Offset Explorer (formerly "KafkaTool")](https://www.kafkatool.com/). **Please note** that you need to specify the Zookeeper port `22181`
-for the successful connection.
-
-## Run Customer Producer
-
-The producer is a Spring MVC based webapp that provides an input form to enter name and (otionally) birthdate of a customer. On submit, the customer is created and sent as a JSON message to a topic named `customers`.
-
-To run the app, enter
-
-```bash
-cd customer-producer-kafka-sample
-mvn spring-boot:run
-```
-
-Then, open `http://localhost:8080` in your browser.
-
-## Run Customer Consumer
-
-The consumer listens on customer messages in the `customers` topic and stores the received objects into an internal (in-memory only) list.
-
-To run the app and read out the customers, input
-
-```bash
-cd customer-consumer-kafka-sample
-mvn spring-boot:run
-curl http://localhost:8081/customers
-```
+Active MQ is then reachable on the host system with local port `8161` (`http://localhost:8161`).
+You can login using `admin` / `password`.

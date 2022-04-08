@@ -2,20 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <parent>
-        <groupId>de.sample.messaging</groupId>
-        <artifactId>messaging-samples</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-    </parent>
-
-    <artifactId>activemq-samples</artifactId>
+    <groupId>de.sample</groupId>
+    <artifactId>customer-spring-jms-sample</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
-        <module>java-ee</module>
-        <module>jakarta-ee</module>
-        <module>spring-jms</module>
+        <module>customer-consumer-spring-jms-sample</module>
+        <module>customer-producer-spring-jms-sample</module>
     </modules>
 
 </project>

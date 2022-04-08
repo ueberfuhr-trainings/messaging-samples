@@ -14,10 +14,10 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @MessageDriven(name = "CustomerMDB")
-public class CustomerListener implements MessageListener {
+public class CustomersListener implements MessageListener {
 
     @Inject
-    CustomerManager manager;
+    CustomersManager manager;
 
     @Override
     @SneakyThrows

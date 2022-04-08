@@ -1,0 +1,13 @@
+server:
+  port: 9083
+  servlet:
+    application-display-name:
+spring:
+  activemq:
+    broker-url: tcp://localhost:61616
+    user: admin
+    password: password
+
+messaging:
+  queue: customer-spring-queue
+

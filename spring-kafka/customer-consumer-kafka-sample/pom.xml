@@ -8,11 +8,10 @@
         <version>2.6.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>de.sample</groupId>
+    <groupId>de.sample.messaging</groupId>
     <artifactId>customer-consumer-kafka-sample</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>customer-consumer-kafka-sample</name>
-    <description>Customer consumer service</description>
+    <name>Customer Consumer Application (Spring Kafka)</name>
     <properties>
         <java.version>17</java.version>
     </properties>

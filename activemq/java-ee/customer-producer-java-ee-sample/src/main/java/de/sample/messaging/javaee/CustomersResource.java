@@ -36,7 +36,7 @@ public class CustomersResource {
     Queue customerQueue;
 
     @Inject
-    CustomerManager manager;
+    CustomersManager manager;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
