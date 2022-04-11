@@ -107,3 +107,5 @@
   - einmalige Verarbeitung einer Message
   - Kommunikation mit externen System (Puffern) -> analog Poststelle
   - (synchrone) Kommunikation (2 Queues: Hin+Rück) -> lose Kopplung
+
+[Quellenempfehlung](https://www.oreilly.com/library/view/java-message-service/9780596802264/ch04.html)
