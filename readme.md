@@ -6,4 +6,4 @@ This repository contains code samples of applications that access messaging syst
 - [Active MQ with several implementations](activemq)
 - [Artemis (only Docker Compose)](artemis)
 
-To find out about messaging in general, read [this documentation](messaging.md).
+To find out about messaging in general, read [this documentation](docs/readme.md).
