@@ -191,3 +191,27 @@
 | Standardisierung          | OASIS (ISO/IEC 20922)                                              | OASIS (ISO 19464)                                                                                                                                                               | -                                                                                                                                |
 | Broker                    | Mosquitto, HiveMQ, ActiveMQ, IBMMQ, Cloud-Services bei AWS & Azure | ActiveMQ, RabbitMQ, IBMMQ                                                                                                                                                       | Active MQ                                                                                                                        |
 | Java-API (unvollständig)  | [Eclipse Paho](https://www.baeldung.com/java-mqtt-client)          | [Spring](https://spring.io/projects/spring-amqp), [Apache Qpid](https://qpid.apache.org/), [JMS Resource Adapter for AMQP](https://github.com/amqphub/amqp-10-resource-adapter) | [Spring](https://docs.spring.io/spring-integration/reference/html/stomp.html), [Vert.X](https://vertx.io/docs/vertx-stomp/java/) |
+
+## Kafka
+
+- Motivation: Anforderungen aus Cloud-Systemen
+  - viele kleine Anwendungen (Microservices)
+  - viele direkte Verknüpfungen
+  - hohe Dynamik (automatische Skalierung durch Cloud, häufigere Anwendungsstarts)
+- kein P2P, nur PubSub
+- Nachrichtenformat nicht standardisiert, sondern Verantwortung des Producers
+- kein Transaktionskonzept
+- keine Java-EE-Standards: kein JMS, AMQP, MQTT...
+  - [Kafka Client](https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients/3.1.0)
+  - [Spring for Kafka](https://spring.io/projects/spring-kafka)
+  - [Java EE: CDI Extension](https://github.com/aerogear/kafka-cdi)
+- hohe Skalierbarkeit: _Topic_ besteht aus _Partitions_ (>=1)
+  - Partitions sind verteilbar auf mehrere Knoten
+  - Reihenfolge nur pro Partition verbindlich
+- hoher Durchsatz
+  - Fire & Forget (mehr flüchtige Nachrichten, keine Acknowledgements)
+    - Vorsicht bei Delta Load (_Event Sourcing_)!
+  - Messages persistent, pro Consumer gibt es einen Offset (klassische MQ: Verarbeitung des Zustands pro Nachricht)
+- Einsatzszenarien
+  - _Distributed Streaming Platform_: dauerhafter Versand des aktuellen Zustands (fachlich, Logs, Performance, ...)
+  - auch als trad. MQ möglich (aber nicht umgekehrt)
