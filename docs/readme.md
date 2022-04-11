@@ -110,5 +110,84 @@
 
 [Quellenempfehlung](https://www.oreilly.com/library/view/java-message-service/9780596802264/ch04.html)
 
-## APIs
+## APIs & Protokolle
 
+### Java Message Service (JMS)
+
+- Java-native API (standardisierte Schnittstelle) - kein Protokoll
+- PubSub + P2P
+- Begriffe
+  - JMS Provider = Messaging System
+  - "Treiber" = Resource Adapter (Java EE) = Implementierung der Zugriffe für den jeweiligen Hersteller
+  - JMS Client = Java-Anwendung, die Messages senden/empfangen kann (Producer / Consumer)
+- Aufbau der Messages
+  - Header = standardisierte Metainformationen, z.B. Priorisierung, Timestamp, Expiration Date
+    (https://www.ibm.com/docs/en/sdi/7.2.0.3?topic=connector-jms-headers-properties)
+  - Properties = nicht-standardisierte Metainformationen
+  - Body = Inhalt zum Versenden (Daten, Events = Payload)
+  - Nachrichtenarten
+    - Text
+    - Map (Key-Value-Paare, JSON)
+    - Java-Objekte (Java-native Serialisierung: RMI)
+    - Stream (Strom von einfachen Datentypen, z.B. `15abc3.5`)
+    - Byte-Array
+
+### Message Queuing Telemetry Transport (MQTT)
+- Entstehung bei der IBM durch besondere Anforderungen des IoT
+  - begrenzte Leistung (Ressourcen)
+  - geringe Bandbreite
+  - unterschiedliche Programmiersprachen
+  - schnelles Finden der Gegenstelle
+- einfach: 5 API-Methoden
+- Protokoll ist binär, auf möglichst geringen Overhead ausgelegt
+- Aggregation von Daten über Hubs
+- kein P2P
+- Es gibt Quality-Of-Service Definitionen:
+  - at most once
+  - at least once
+  - exactly once
+- aber: Persistence ist nicht teil der Spezifikation
+- mit aktuellen Versionen auch Security-Mechanismen und TLS sehr gut unterstützt
+- Topics sind Pfade für Publish und Subscribe
+  - Publish
+    `/devices/heizung/thermostat/t1/temp/ist`
+    `/devices/heizung/thermostat/t1/temp/soll`
+  - Subscribe
+    `/devices/heizung/thermostat/#`
+    `/devices/heizung/thermostat/+/temp/ist`
+
+![img_6.png](img_6.png)
+
+### Advanced Message Queuing Protocol (AMQP)
+- Motivation: Herstellerunabhängigkeit
+  - z.B. kein Resource Adapter wie bei JMS
+  - flexiblere Wahl der Client-Plattformen
+- Definiert Transaktions-Verhalten
+  - Acknowledgement
+  - Commit-Rollback Verhalten
+- Berücksichtigt Security-Anforderungen (TLS, Authentifizierung)
+- OSI Anwendungsschicht (Layer 7)
+- Es gibt Quality-Of-Service Definitionen:
+  - at most once
+  - at least once
+  - exactly once
+
+![img_7.png](img_7.png)
+
+### Simple Text Orientated Messaging Protocol (STOMP)
+- text-basiert
+  - Nachrichtenversand mit einfachen Clients: telnet client
+  - Rabbit MQ WebStomp: Browser-Client
+- [Stomp JS](https://stomp-js.github.io/stomp-websocket/codo/extra/docs-src/Usage.md.html)
+- [Spezifikation](https://stomp.github.io/stomp-specification-1.2.html)
+
+### Vergleich: MQTT, AMQP & STOMP
+
+|                           | MQTT                                                               | AMQP                                                                                                                                                                            | STOMP                                                                                                                            |
+|---------------------------|--------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------|
+| Besonderheit / Motivation | Anforderungen des IoT                                              | Herstellerunabhängigkeit                                                                                                                                                        | Fokus auf Einfachheit, Leichtgewichtigkeit, Interoperabilität                                                                    |
+| Syntax                    | binär, komprimierte Header, keine Properties                       | binär (Header+Body)                                                                                                                                                             | text-basiert (analog)                                                                                                            |
+| Szenarien                 | kein P2P, nur PubSub (non-durable)                                 | P2P + PubSub                                                                                                                                                                    | Abstraktionsschicht: Befehle `SEND`oder `SUBSCRIBE`, Broker übersetzt das in Queue/Topics                                        |
+| Standardisierung          | OASIS (ISO/IEC 20922)                                              | OASIS (ISO 19464)                                                                                                                                                               | -                                                                                                                                |
+| Broker                    | Mosquitto, HiveMQ, ActiveMQ, IBMMQ, Cloud-Services bei AWS & Azure | ActiveMQ, RabbitMQ, IBMMQ                                                                                                                                                       | Active MQ                                                                                                                        |
+| Java-API (unvollständig)  | [Eclipse Paho](https://www.baeldung.com/java-mqtt-client)          | [Spring](https://spring.io/projects/spring-amqp), [Apache Qpid](https://qpid.apache.org/), [JMS Resource Adapter for AMQP](https://github.com/amqphub/amqp-10-resource-adapter) | [Spring](https://docs.spring.io/spring-integration/reference/html/stomp.html), [Vert.X](https://vertx.io/docs/vertx-stomp/java/) |
