@@ -25,4 +25,12 @@
         <properties.activemq PhysicalName="customer-javaee-queue"/>
     </jmsQueue>
 
+    <jmsTopicConnectionFactory jndiName="jms/TopicConnectionFactory">
+        <properties.activemq serverUrl="tcp://${AMQ_HOST}:${AMQ_PORT}"/>
+    </jmsTopicConnectionFactory>
+
+    <jmsTopic id="products-topic" jndiName="jms/ProductsTopic">
+        <properties.activemq PhysicalName="products-topic"/>
+    </jmsTopic>
+
 </server>
