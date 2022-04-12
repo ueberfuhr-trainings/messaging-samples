@@ -5,7 +5,7 @@ This samples use Active MQ to communicate. There are implementations for
 - [Java EE with Liberty and JMS](java-ee)
 - [Jakarta EE with Liberty and JMS](jakarta-ee)
 - [Spring Boot and JMS](spring-jms)
-- [Spring Boot and STOMP](spring-stomp)
+- [Spring Boot and STOMP](stomp)
 
 ## Install Active MQ
 
