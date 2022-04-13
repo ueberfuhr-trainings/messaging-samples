@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8086
 spring:
   kafka:
     bootstrap-servers: localhost:29092
@@ -8,4 +8,4 @@ spring:
       group-id: customers
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
-        ['spring.json.trusted.packages']: de.sample.kafka.customers
+        "[spring.json.trusted.packages]": de.sample.kafka.customers
