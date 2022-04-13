@@ -1,6 +1,7 @@
 # Messaging Samples
 
 [![java-ci-build](https://github.com/ueberfuhr-trainings/messaging-samples/actions/workflows/java-ci-build.yml/badge.svg)](https://github.com/ueberfuhr-trainings/messaging-samples/actions/workflows/java-ci-build.yml)
+[![stomp-client-ci-build](https://github.com/ueberfuhr-trainings/messaging-samples/actions/workflows/stomp-client-ci-build.yml/badge.svg)](https://github.com/ueberfuhr-trainings/messaging-samples/actions/workflows/stomp-client-ci-build.yml)
 
 This repository contains code samples of applications that access messaging systems.
 
