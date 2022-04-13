@@ -1,6 +1,6 @@
 # Messaging Samples
 
-[![CI Build](https://github.com/ueberfuhr-trainings/messaging-samples/actions/workflows/maven.yml/badge.svg)](https://github.com/ueberfuhr-trainings/messaging-samples/actions/workflows/maven.yml)
+[![CI Build](https://github.com/ueberfuhr-trainings/messaging-samples/actions/workflows/java-ci-build/badge.svg)](https://github.com/ueberfuhr-trainings/messaging-samples/actions/workflows/java-ci-build)
 
 This repository contains code samples of applications that access messaging systems.
 

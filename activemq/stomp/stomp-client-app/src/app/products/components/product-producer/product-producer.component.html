@@ -1,0 +1,9 @@
+<h3>Send Product Info!</h3>
+
+<form (ngSubmit)="onSubmit()">
+  <input type="text" minlength="3" name="shortcut" placeholder="Enter shortcut" [(ngModel)]="product.shortcut">
+  <input type="text" minlength="3" name="name" placeholder="Enter name" [(ngModel)]="product.name">
+  <input type="number" name="price" placeholder="Enter price" [(ngModel)]="product.price">
+  <input type="number" name="stock" placeholder="Enter stock" [(ngModel)]="product.stock">
+  <input type="submit">
+</form>

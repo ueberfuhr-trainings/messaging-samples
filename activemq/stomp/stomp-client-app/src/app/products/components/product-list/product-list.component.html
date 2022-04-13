@@ -1,0 +1,12 @@
+<h3>Produkt-Aktualisierungen</h3>
+
+<ul>
+  <li *ngFor="let p of products">
+    {{p.product.shortcut}}
+    -
+    {{p.product.name}} ({{p.product.price}} EUR, {{p.product.stock}} Stück)
+    <span style="font-style: italic; font-size: 0.9em; color: #888888;">
+      {{p.timestamp | niceDatetimeFormat: 'dd.MM.yyyy'}}
+    </span>
+  </li>
+</ul>

@@ -11,7 +11,6 @@ import org.springframework.jms.support.converter.MessageType;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import java.util.Map;
-import java.util.function.Consumer;
 
 @Configuration
 public class JMSConfig {
