@@ -1,14 +1,14 @@
-package de.sample.kafka.customers;
+package de.sample.kafka.customers.messaging;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
-@AllArgsConstructor
 @Data
-public class Customer {
+public class CustomerDto {
 
+    private UUID id;
     private String name;
     private LocalDate birthdate;
 

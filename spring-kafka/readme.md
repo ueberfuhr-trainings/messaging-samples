@@ -3,6 +3,7 @@
 This sample contains 2 Spring Boot projects:
 
 - a webapp to produce a customer
+  - the topic is configurable in [application.yml](./customer-producer-kafka-sample/src/main/resources/application.yml)
 - a consumer that stores customers (in-memory) and provides a REST service to read them out
 
 ## Install Kafka

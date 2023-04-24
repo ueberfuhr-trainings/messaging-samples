@@ -1,0 +1,4 @@
+application:
+  customers:
+    topic:
+      name: test-customers

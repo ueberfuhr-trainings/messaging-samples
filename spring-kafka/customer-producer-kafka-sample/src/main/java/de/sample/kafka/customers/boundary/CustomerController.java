@@ -1,8 +1,9 @@
-package de.sample.kafka.customers;
+package de.sample.kafka.customers.boundary;
 
+import de.sample.kafka.customers.domain.Customer;
+import de.sample.kafka.customers.domain.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,19 +16,24 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class CustomerController {
 
-    private final KafkaTemplate<String, Customer> template;
+    private final CustomerService service;
 
     @PostMapping
-    public String sendMessage(
+    public String create(
       @RequestParam
-        String name,
+      String name,
       @RequestParam(required = false)
       @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-        LocalDate birthdate) {
-        Customer customer = new Customer(name, birthdate);
-        this.template.send("customers", customer).completable()
-          .thenAccept(System.out::println);
+      LocalDate birthdate
+    ) {
+
+        final var customer = Customer.builder()
+          .name(name)
+          .birthdate(birthdate)
+          .build();
+        this.service.createCustomer(customer);
         return "redirect:index.html";
+
     }
 
 }

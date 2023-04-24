@@ -1,4 +1,4 @@
-package de.sample.kafka.customers;
+package de.sample.kafka.customers.messaging;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;
@@ -9,10 +9,10 @@ import org.springframework.kafka.config.TopicBuilder;
 public class KafkaConfiguration {
 
     @Bean // optionally to create topic
-    public NewTopic topic() {
-        return TopicBuilder.name("customers")
-          .partitions(2)
-          .replicas(1)
+    public NewTopic topic(CustomerTopicConfiguration topic) {
+        return TopicBuilder.name(topic.getName())
+          .partitions(topic.getPartitions())
+          .replicas(topic.getReplica())
           .build();
     }
 
