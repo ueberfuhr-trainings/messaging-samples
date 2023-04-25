@@ -1,11 +1,26 @@
 server:
-  port: 8086
+  port: 8081
 spring:
   kafka:
     bootstrap-servers: localhost:29092
     consumer:
       auto-offset-reset: earliest
       group-id: customers
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      # We could name the JsonDeserializer here,
+      # but this would lead to errors we cannot handle when deserialization fails
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
       properties:
-        "[spring.json.trusted.packages]": de.sample.kafka.customers
+        "[spring.json.trusted.packages]": de.sample.kafka.customers.messaging
+        # for enhanced type mappings, see
+        # - (current)      https://docs.spring.io/spring-kafka/docs/current/reference/html/#serdes-mapping-types
+        # - (fixed: 3.0.6) https://docs.spring.io/spring-kafka/docs/3.0.6/reference/html/#serdes-mapping-types
+        "[spring.json.use.type.headers]": false
+        "[spring.json.value.default.type]": de.sample.kafka.customers.messaging.CustomerMessagingDto
+        "[spring.deserializer.value.delegate.class]": org.springframework.kafka.support.serializer.JsonDeserializer
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+application:
+  customers:
+    topic:
+      name: customers
+      currency: 3
