@@ -10,6 +10,7 @@
     <modules>
         <module>customer-consumer-kafka-sample</module>
         <module>customer-producer-kafka-sample</module>
+        <module>customer-producer-kafka-data-rest-sample</module>
     </modules>
 
 </project>

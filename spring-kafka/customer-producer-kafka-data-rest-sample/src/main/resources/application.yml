@@ -1,0 +1,17 @@
+server:
+  port: 8082
+spring:
+  jpa:
+    open-in-view: false
+  kafka:
+    bootstrap-servers: localhost:29092
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        # do not serialize the class name into the message
+        "[spring.json.add.type.headers]": false
+application:
+  customers:
+    topic:
+      name: customers
+      partitions: 2

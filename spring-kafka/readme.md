@@ -41,3 +41,22 @@ cd customer-consumer-kafka-sample
 mvn spring-boot:run
 curl http://localhost:8081/customers
 ```
+
+## Further Projects
+
+There are several sample projects using Spring Boot, that we can test too.
+
+### Spring Data REST Producer
+
+This project uses [Spring Data REST](https://docs.spring.io/spring-data/rest/docs/current/reference/html/)
+to provide an API to create customers.
+To run the app and read out the customers, input
+
+```bash
+cd customer-producer-kafka-data-rest-sample
+mvn spring-boot:run
+curl http://localhost:8082/customers
+```
+
+There`s also an integrated [HAL Explorer](http://localhost:8082/) and a 
+[Swagger UI](http://localhost:8082/swagger-ui.html) to create a customer.
