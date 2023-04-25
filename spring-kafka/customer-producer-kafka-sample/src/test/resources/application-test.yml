@@ -1,3 +1,10 @@
+spring:
+  kafka:
+    bootstrap-servers: localhost:29092
+    producer:
+      properties:
+        # we disable this in production, but need this for the tests
+        "[spring.json.add.type.headers]": true
 application:
   customers:
     topic:

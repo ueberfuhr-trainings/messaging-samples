@@ -16,6 +16,7 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.listener.KafkaMessageListenerContainer;
 import org.springframework.kafka.listener.MessageListener;
+import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.test.EmbeddedKafkaBroker;
 import org.springframework.kafka.test.context.EmbeddedKafka;
@@ -91,8 +92,10 @@ class CustomerProducerWithEmbeddedKafkaTests {
           ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true",
           ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "10",
           ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "60000",
+          // not needed, but must not be null
           ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class,
-          ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class,
+          ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class,
+          ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, JsonDeserializer.class.getName(),
           JsonDeserializer.TRUSTED_PACKAGES, "*",
           ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
     }
