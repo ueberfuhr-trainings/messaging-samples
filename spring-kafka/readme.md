@@ -19,7 +19,8 @@ for the successful connection.
 
 ## Run Customer Producer
 
-The producer is a Spring MVC based webapp that provides an input form to enter name and (otionally) birthdate of a customer. On submit, the customer is created and sent as a JSON message to a topic named `customers`.
+The producer is a Spring MVC based REST service that provides customer management.
+When a customer is created, a message is sent as a JSON message to a topic named `customers`.
 
 To run the app, enter
 
@@ -28,7 +29,7 @@ cd customer-producer-kafka-sample
 mvn spring-boot:run
 ```
 
-Then, open `http://localhost:8080` in your browser.
+Then, open `http://localhost:8080/swagger-ui.html` in your browser.
 
 ## Run Customer Consumer
 
