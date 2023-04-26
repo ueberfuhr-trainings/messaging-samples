@@ -14,6 +14,7 @@ public class CustomerMessage {
 
     private UUID id;
     private String name;
+    private String phone;
     private LocalDate birthdate;
 
 }

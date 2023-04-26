@@ -15,7 +15,7 @@ spring:
         # - (current)      https://docs.spring.io/spring-kafka/docs/current/reference/html/#serdes-mapping-types
         # - (fixed: 3.0.6) https://docs.spring.io/spring-kafka/docs/3.0.6/reference/html/#serdes-mapping-types
         "[spring.json.use.type.headers]": false
-        "[spring.json.value.default.type]": de.sample.kafka.customers.messaging.CustomerMessagingDto
+        "[spring.json.value.default.type]": de.sample.kafka.todos.messaging.customers.CustomerMessage
         "[spring.deserializer.value.delegate.class]": org.springframework.kafka.support.serializer.JsonDeserializer
   jackson:
     property-naming-strategy: SNAKE_CASE

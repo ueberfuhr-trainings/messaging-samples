@@ -33,14 +33,15 @@ Then, open `http://localhost:8080/swagger-ui.html` in your browser.
 
 ## Run Customer Consumer
 
-The consumer listens on customer messages in the `customers` topic and stores the received objects into an internal (in-memory only) list.
+The consumer listens on customer messages in the `customers` topic
+and creates a task for each newly created customer.
 
 To run the app and read out the customers, input
 
 ```bash
 cd customer-consumer-kafka-sample
 mvn spring-boot:run
-curl http://localhost:8081/customers
+curl http://localhost:8081/todos
 ```
 
 ## Further Projects
